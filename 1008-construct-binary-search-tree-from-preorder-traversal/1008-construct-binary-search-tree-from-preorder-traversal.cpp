@@ -11,29 +11,20 @@
  */
 class Solution {
 public:
-    TreeNode *consBST( vector<int>& pOrd, int pL, int pR, vector<int>& iOrd, int iL, int iR , map<int,int> &m)
+    TreeNode *consBST( vector<int>& pOrd, int &idx, int uB )
     {
         //base case
-        if( pL > pR || iL > iR ) return NULL;
-        
-        //creating root and idx
-        TreeNode *root = new TreeNode(pOrd[pL]);
-        int idx = m[pOrd[pL]];
-        int nEle = idx - iL;
-        
+        if( idx == pOrd.size() || pOrd[idx] > uB ) return NULL;
+        //operation
+        TreeNode *root = new TreeNode( pOrd[idx++] );
         //recursive case
-        root->left = consBST( pOrd, pL + 1, pL + nEle, iOrd, iL, idx - 1, m);
-        root->right = consBST( pOrd, pL + nEle +1, pR, iOrd, idx + 1, iR, m);
+        root->left = consBST( pOrd, idx, root->val);
+        root->right = consBST( pOrd, idx, uB);
         
         return root;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        vector<int> iOrd;
-        iOrd = preorder;
-        sort( iOrd.begin(), iOrd.end());
-        map<int,int> m;
-        for( int i = 0; i < iOrd.size(); ++i )
-            m.insert({iOrd[i],i});
-        return consBST( preorder, 0, iOrd.size()-1, iOrd, 0, iOrd.size()-1,m);
+        int i = 0;
+        return consBST( preorder, i, INT_MAX );
     }
 };
