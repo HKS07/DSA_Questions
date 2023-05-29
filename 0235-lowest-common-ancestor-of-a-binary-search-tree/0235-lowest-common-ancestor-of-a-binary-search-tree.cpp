@@ -12,14 +12,13 @@ class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         //base case
-        if( root == NULL || root->val == p->val || root->val == q->val) return root;
+        if( root == NULL ) return NULL;
         
-        //recursion
-        TreeNode *l = lowestCommonAncestor( root->left, p, q );
-        TreeNode *r = lowestCommonAncestor( root->right, p, q );
+        int c = root->val;
         
-        if( l == NULL ) return r;
-        else if( r == NULL ) return l;
-        else return root;
+        if( c < p->val && c < q->val ) return lowestCommonAncestor(root->right,p,q);
+        if( c > p->val && c > q->val ) return lowestCommonAncestor(root->left,p,q);
+        
+        return root;
     }
 };
