@@ -112,10 +112,10 @@ class Solution
         if( s == c )
         {
             sol = r->data;
-            c++;
-            return;
+            
+            
         }
-        else c++;
+        c++;
         
         kthSmallest( r->right, s, c);
     }
