@@ -1,55 +1,30 @@
 class Solution {
-public:
-    bool check( int start, vector<vector<int>>& graph, vector<int> &color)
+    bool dfs( int node, int nodeCol, vector<int> &col, vector<vector<int>>& graph)
     {
-        // vector<int> color(graph.size(),-1); color[0] = 0;
-        queue<int> q; q.push(start);
-        color[start] = 0;
+        col[node] = nodeCol;
         
-        while( !q.empty() )
+        for( auto adjNode: graph[node] )
         {
-            int node = q.front(); q.pop();
-            
-            for( auto adjNode: graph[node] )
+            if( col[adjNode] == -1 )
             {
-                if( color[adjNode] == -1 )
-                {
-                    // Node is not colored
-                    // color[adjNode] = color[0] == 0? 1:0;
-                    color[adjNode] = !color[node];
-                    q.push(adjNode);
-                }
-                else if( color[adjNode] == color[node] )
-                {
-                    return false;
-                }
-                // else
-                // {
-                //  // Node is colored
-                //     if( color[node] != color[adjNode] )
-                //     {
-                //         // same color
-                //         q.push(adjNode);
-                //     }
-                //     else
-                //     {
-                //         // different color
-                //         return false;
-                //     }
-                // }
+                if( dfs( adjNode, !nodeCol, col, graph) == false ) return false;
             }
+            else if( col[adjNode] == nodeCol )
+                return false;
         }
         return true;
     }
+public:
     bool isBipartite(vector<vector<int>>& graph) {
-        vector<int> color(graph.size(),-1); 
-        for( int i  = 0; i < graph.size(); ++i )
+        vector<int> col( graph.size(), -1 );
+        
+        
+        for( int i = 0; i < graph.size(); ++i )
         {
-            if( color[i] == -1 )
-            {
-                if( check( i, graph, color) == false ) return false;
-            }
+            if( col[i] == -1 )
+                if( dfs( i, 0, col, graph ) == false) return false;
         }
+        
         return true;
     }
 };
