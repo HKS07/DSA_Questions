@@ -8,13 +8,15 @@ public:
             if( pre == 0  ) pre = 1;
             
             pre *= nums[i]; maxPre = max( maxPre, pre );
-        }
-        for( int j = nums.size() - 1; j >= 0; --j )
-        {
+            
             if( suf == 0 ) suf = 1;
             
-            suf *= nums[j]; maxSuf = max( maxSuf, suf );
+            suf *= nums[nums.size() -i - 1]; maxSuf = max( maxSuf, suf );
         }
+//         for( int j = nums.size() - 1; j >= 0; --j )
+//         {
+            
+//         }
         return max(maxPre,maxSuf);
     }
 };
