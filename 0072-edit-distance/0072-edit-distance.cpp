@@ -11,8 +11,8 @@ public:
         // operation
         if( s1[i] == s2[j] ) return dp[i][j] = help( s1, s2, i - 1, j - 1, dp );
         
-        int ins = 1 + help( s1, s2, i, j - 1, dp), del = 1  + help( s1, s2, i - 1, j, dp ), rep = 1 + help( s1, s2, i - 1, j - 1, dp);
-        return dp[i][j] = min( ins, min( del, rep));
+        // int ins = 1 + help( s1, s2, i, j - 1, dp), del = 1  + help( s1, s2, i - 1, j, dp ), rep = 1 + help( s1, s2, i - 1, j - 1, dp);
+        return dp[i][j] = 1 + min( help( s1, s2, i, j - 1, dp), min( help( s1, s2, i - 1, j, dp ), help( s1, s2, i - 1, j - 1, dp)));
         
     }
     int minDistance(string word1, string word2) {
