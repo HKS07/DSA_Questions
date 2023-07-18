@@ -5,30 +5,30 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    
-    
+    // Function to return Breadth First Traversal of given graph.
     vector<int> bfsOfGraph(int V, vector<int> adj[]) {
+        vector<int> sol, vis(V,-1);
         
-        vector<bool> vis(V,false);
-        vector<int> sol;
-        queue<int> q;
-        q.push(0);
-        // sol.push_back(0);
-        vis[0] = true;
-        while( !q.empty() )
-        {
-            int node = q.front();
-            q.pop();
-            sol.push_back(node);
-            for( auto it: adj[node] )
-            {
-                if( !vis[it] )
+        
+                queue<int> q;
+                q.push(0); 
+                
+                while( !q.empty() )
+                {
+                    int node = q.front(); q.pop();
+                    sol.push_back(node);
+                    for( auto neighbor: adj[node] )
                     {
-                        vis[it] = true;
-                        q.push(it);
+                        if( vis[neighbor] == -1 )
+                        {
+                            vis[neighbor] = 1;
+                            q.push(neighbor);
+                        }
                     }
-            }
-        }
+                }
+            
+        
+        
         return sol;
     }
 };
