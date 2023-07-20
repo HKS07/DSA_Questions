@@ -9,29 +9,32 @@ public:
     }
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int row = matrix.size(), col = matrix[0].size();
-        vector<vector<int>> dp(row+1,vector<int> (col+1,INT_MAX));
-        int minn = INT_MAX;
-        for( int i = 0; i < col; ++i )
-        {
-            minn = min(minn,help(row-1,i,matrix,dp));
-        }
-        return minn;
+        // vector<vector<int>> dp(row+1,vector<int> (col+1,INT_MAX));
+        // int minn = INT_MAX;
+        // for( int i = 0; i < col; ++i )
+        // {
+        //     minn = min(minn,help(row-1,i,matrix,dp));
+        // }
+        
+        vector<vector<int>> dp(row, vector<int> (col,INT_MAX));
+        for(int j = 0; j < col; ++j ) dp[0][j] = matrix[0][j];
+        
+        
+                
+                for( int i = 1; i < row; ++i )
+                {
+                    for( int j = 0; j < col; ++j )
+                    {
+                        int up = matrix[i][j] + dp[i-1][j];
+                        int ld = INT_MAX, rd = INT_MAX;
+                        if(j-1>=0) ld = matrix[i][j] + dp[i-1][j-1];
+                        if(j+1<col) rd = matrix[i][j] + dp[i-1][j+1];
+                        dp[i][j] = min({up,ld,rd});
+                    }
+                 }
+               int mini = INT_MAX;
+            for( auto it: dp[row-1]) mini = min(mini,it);
+        return mini;
     }
-//     int minFallingPathSumHelper(vector<vector<int>>& matrix, int r, int c, vector<vector<int>>& dp){
-//         if(r == 0 and c < matrix[0].size() and c >= 0) return matrix[r][c]; 
-//         if(c >= matrix[0].size() or c < 0) return INT_MAX;
-        
-//         if(dp[r][c] != INT_MAX) return dp[r][c];
-//         return dp[r][c] = matrix[r][c] + min(min(minFallingPathSumHelper(matrix, r-1, c+1, dp), minFallingPathSumHelper(matrix, r-1, c, dp)), minFallingPathSumHelper(matrix, r-1, c-1, dp));
-        
-//     }
-//     int minFallingPathSum(vector<vector<int>>& matrix) {
-//         int rows = matrix.size(), cols = matrix[0].size();
-//         vector<vector<int>> dp(rows+1, vector<int>(cols+1, INT_MAX));
-//         int ans = INT_MAX;
-//         for(int c=0; c < cols; c++){
-//             ans = min(ans, minFallingPathSumHelper(matrix, rows-1, c, dp));
-//         }
-//         return ans;
-    // }
+
 };
