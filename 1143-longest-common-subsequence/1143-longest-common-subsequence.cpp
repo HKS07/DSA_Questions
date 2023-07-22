@@ -15,7 +15,7 @@ public:
     }
     int longestCommonSubsequence(string text1, string text2) {
         int l1 = text1.length(), l2 = text2.length();
-        vector<vector<int>> dp(l1+1, vector<int> (l2 +1, -1));
+        vector<vector<int>> dp(l1, vector<int> (l2, -1));
         return help(text1,text2, l1-1, l2-1, dp);
     }
 };
