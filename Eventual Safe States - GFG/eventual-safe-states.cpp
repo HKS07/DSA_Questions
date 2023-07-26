@@ -9,49 +9,38 @@ using namespace std;
 // User function Template for C++
 
 class Solution {
-    bool dfs( int node, int vis[], int pathVis[], int check[], vector<int> adj[])
-    {
-        vis[node] = 1;
-        pathVis[node] = 1;
-        // check[node] = 0;
-        for( auto ngbr: adj[node] )
-        {
-            if( !vis[ngbr] )
-            {
-                if( dfs(ngbr, vis, pathVis, check, adj ) ) 
-                {
-                    // check[node] = 0;
-                    return true;
-                }
-            } 
-            else if( pathVis[ngbr] ) 
-            {
-                    // check[node] = 0;
-                    return true;
-            }
-        }
-        check[node] = 1;
-        pathVis[node] = 0;
-        return false;
-    }
   public:
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
-        int vis[V] = {0};
-        int pathVis[V] = {0};
-        int check[V] = {0};
-        vector<int> safe;
+        vector<int> adjRev[V], inDegree(V,0);
         
-        for( int i = 0; i < V; ++i )
+        for( int i = 0; i < V; ++i  )
         {
-            if( !vis[i] ) dfs( i, vis, pathVis, check, adj );
+            for( auto j: adj[i] )
+            {
+                adjRev[j].push_back(i);
+                inDegree[i]++;
+            }
+        }
+        queue<int> q;
+        for( int i = 0;i < V;++i )
+        {
+            if( inDegree[i] == 0 ) q.push(i); 
         }
         
-        for( int i = 0; i < V; ++i )
+        vector<int> sol;
+        while( !q.empty() )
         {
-            if( check[i] == 1) safe.push_back(i);
+            int node = q.front(); q.pop();
+            sol.push_back(node);
+            for(auto ngbr: adjRev[node] )
+            {
+                inDegree[ngbr]--;
+                if( inDegree[ngbr] == 0 )
+                    q.push(ngbr);
+            }
         }
-        
-        return safe;
+        sort(begin(sol),end(sol));
+        return sol;
     }
 };
 
