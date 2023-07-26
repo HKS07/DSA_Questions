@@ -42,7 +42,7 @@ class Solution {
         while( !s.empty() )
         {
             int node = s.top(); s.pop();
-            
+            if( dist[node] == 1e9 ) continue;
             for( auto it: adj[node] )
             {
                 int v = it.first, wt = it.second;
