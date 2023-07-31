@@ -1,38 +1,39 @@
 class Solution {
 public:
-    int ladderLength(string bw, string ew, vector<string>& wordList) {
-        unordered_set<string> wl(begin(wordList),end(wordList));
-        int sol = INT_MAX;
+    
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        set<string> wl(wordList.begin(),wordList.end());
+        // wl.insert(beginWord);
+        if( wl.find(beginWord) != wl.end() ) wl.erase(beginWord);
         queue<pair<string,int>> q;
-        q.push({bw,1});
+        q.push({beginWord,0});
         
         while( !q.empty() )
         {
-            string org = q.front().first;
-            int lvl = q.front().second;
-            q.pop();
+            int sz = q.size();
             
-            if( org == ew ) 
+            for( int i = 0; i < sz; ++i )
             {
-                sol = min( sol, lvl );
-                return sol==INT_MAX?0:sol;
-            }
-            
-            for( int i = 0; i < org.length(); ++i )
-            {
-                char orgChar = org[i];
-                for( char j = 'a'; j <= 'z'; ++j )
+                string w = q.front().first;
+                int lvl = q.front().second;
+                q.pop();
+                if( w == endWord ) return lvl+1;
+                
+                for( int pos = 0; pos < w.length(); ++pos )
                 {
-                    org[i] = j;
-                    if( wl.find(org) != wl.end() )
+                    for( char letter = 'a'; letter <= 'z'; ++letter )
                     {
-                        wl.erase(org);
-                        q.push({org,lvl+1});
+                        string t = w;
+                        t[pos] = letter;
+                        if( wl.find(t) != wl.end() )
+                        {
+                            q.push({t,lvl+1});
+                            wl.erase(t);
+                        }
                     }
-                    org[i] = orgChar;
                 }
             }
         }
-        return sol==INT_MAX?0:sol;
+        return 0;
     }
 };
