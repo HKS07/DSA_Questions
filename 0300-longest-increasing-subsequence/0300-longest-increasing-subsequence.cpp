@@ -18,22 +18,24 @@ public:
         
 //         return lenHelp( 0, -1, nums, nums.size(), dp );
         int n = arr.size();
-        vector<vector<int>> dp(n+1, vector<int> (n+1,0));
+        // vector<vector<int>> dp(n+1, vector<int> (n+1,0));
+        vector<int> next(n+1,0), cur(n+1,0);
 
         for( int idx = n-1; idx >= 0; --idx )
         {
             for( int preIdx = idx-1; preIdx >=-1 ; --preIdx )
             {
-                int len = 0 + dp[idx+1][preIdx+1];
+                int len = 0 + next[preIdx+1];
 
                 if( preIdx == -1 || arr[idx] > arr[preIdx] )
                 {
-                    len = max( len , 1 + dp[idx+1][idx+1]);
+                    len = max( len , 1 + next[idx+1]);
                 }
-                dp[idx][preIdx+1] = len;
+                cur[preIdx+1] = len;
             }
+            next = cur;
         }
-        return dp[0][0];
+        return cur[0];
         
     }
 };
