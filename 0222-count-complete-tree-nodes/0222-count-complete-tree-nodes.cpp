@@ -20,8 +20,11 @@ public:
         help(r->right);
     }
     int countNodes(TreeNode* root) {
+        if( !root ) return 0;
+        c++;
+        countNodes(root->left);
+        countNodes(root->right);
         
-        help(root);
         return c;
     }
 };
