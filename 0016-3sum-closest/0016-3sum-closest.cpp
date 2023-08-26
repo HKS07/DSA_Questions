@@ -1,23 +1,22 @@
 class Solution {
 public:
-    int threeSumClosest(vector<int>& n, int t) {
+    int threeSumClosest(vector<int>& n, int tar) {
         int closest = 1e9, sz = n.size(), sum = 0;
         sort(n.begin(),n.end());
         for( int i = 0; i <= sz-3; ++i )
         {
-            
+            int t = tar - n[i];
             int l = i+1, r = sz-1;
             
             while( l < r )
             {
-                int val = n[i]+n[l]+n[r];
-                if( abs( t - val) < closest )
+                if( abs( t - n[l]-n[r]) < closest )
                 {
-                    closest = abs( t - val);
-                    sum = val;
+                    closest = abs( t - n[l]-n[r]);
+                    sum = n[i]+n[l]+n[r];
                 }
                 
-                if( n[i]+n[l]+n[r] < t ) ++l;
+                if( n[i]+n[l]+n[r] < tar ) ++l;
                 else --r;
             }
         }
