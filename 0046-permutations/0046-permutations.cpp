@@ -1,19 +1,19 @@
 class Solution {
 public:
     vector<vector<int>> sol;
-    void help( int idx, vector<int> &t )
+    void help( int pos, vector<int> &n )
     {
-        if(idx == t.size() )
+        if( pos == n.size() ) 
         {
-            sol.push_back(t);
+            sol.push_back(n);
             return;
         }
         
-        for(int pos = idx; pos < t.size(); ++pos )
+        for( int i = pos; i < n.size(); ++i )
         {
-            swap(t[idx],t[pos] );
-            help(idx+1,t);
-            swap(t[idx],t[pos]);
+            swap(n[i],n[pos]);
+            help(pos+1,n);
+            swap(n[i],n[pos]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
