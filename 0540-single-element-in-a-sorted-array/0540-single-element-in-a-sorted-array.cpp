@@ -23,7 +23,7 @@ public:
                 if( mid+1 <n && nums[mid] == nums[mid+1] )
                 {
                     //left part is sorted
-                    l = mid+2;
+                    l = mid+1;
                 }
                 else
                 {
