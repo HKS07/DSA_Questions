@@ -27,7 +27,7 @@ public:
                 }
                 else
                 {
-                    h = mid;
+                    h = mid-1;
                 }
             }
             else
@@ -39,7 +39,7 @@ public:
                 }
                 else
                 {
-                    h = mid;
+                    h = mid-1;
                 }
             }
         }
